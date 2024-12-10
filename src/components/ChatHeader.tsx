@@ -22,7 +22,7 @@ const ChatHeader = ({ isSidebarOpen = true }: ChatHeaderProps) => {
       <div 
         className="fixed top-8 z-30 w-full border-b border-[#4E4F60] bg-white/95 backdrop-blur"
         style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=2070&auto=format&fit=crop)',
+          backgroundImage: 'url(/lovable-uploads/de0cd9df-342d-4f20-acf4-46e5948ef0d0.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
