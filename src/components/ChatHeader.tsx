@@ -20,7 +20,7 @@ const ChatHeader = ({ isSidebarOpen = true }: ChatHeaderProps) => {
         </div>
       </div>
       <div className="fixed top-8 z-30 w-full border-b border-[#4E4F60] bg-white/95 backdrop-blur">
-        <div className="flex h-[60px] items-center justify-between px-4 bg-white/80 backdrop-blur">
+        <div className="flex h-[60px] items-center justify-between px-4">
           <div className="flex items-center gap-2">
             <span className={`font-semibold text-black ${!isSidebarOpen ? 'ml-24' : ''}`}>ProStandardGPT</span>
             <ChevronDown className="h-4 w-4 text-gray-700" />
