@@ -30,7 +30,7 @@ const ChatHeader = ({ isSidebarOpen = true }: ChatHeaderProps) => {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button variant="ghost" size="icon" className="text-gray-600 hover:text-gray-900">
-                  <Phone className="h-4 w-4" />
+                  <Phone className="h-4 w-4 text-black" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
@@ -43,7 +43,7 @@ const ChatHeader = ({ isSidebarOpen = true }: ChatHeaderProps) => {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button variant="ghost" size="icon" className="text-gray-600 hover:text-gray-900">
-                  <Mail className="h-4 w-4" />
+                  <Mail className="h-4 w-4 text-black" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
