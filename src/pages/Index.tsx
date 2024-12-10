@@ -18,6 +18,21 @@ const Index = () => {
   const { toast } = useToast();
 
   const generateResponse = (content: string) => {
+    if (content.toLowerCase().includes('what teams are hot') || content.toLowerCase().includes('hot teams')) {
+      return "Right now, we're seeing huge demand for these hot items:\n\n" +
+        "1. Los Angeles Dodgers Sublimated Satin Jacket\n" +
+        "- Style ID: LLD6314753\n" +
+        "- Premium satin finish with stunning sublimated design\n" +
+        "- Features classic Dodgers logo with crossed bats\n" +
+        "- Available in sizes S-3XL\n" +
+        "- Retail price: $175.00\n\n" +
+        "2. Air Jordan 12 'White/Game Royal'\n" +
+        "- Style #: CT8013-140\n" +
+        "- Release Date: December 18, 2024\n" +
+        "- Price: $210\n" +
+        "- Perfect match for Dodgers gear with its white/black/game royal colorway\n\n" +
+        "Would you like to know more about sizing or see other team matches?";
+    }
     if (content.toLowerCase().includes('best selling teams in brooklyn')) {
       return "In Brooklyn, the Nets dominate sales at Pro Standard, with their black and white colorways being particularly popular. The retro Brooklyn Dodgers merchandise also maintains strong sales due to the historic connection. For sneakers that complement these teams:\n\n1. Brooklyn Nets:\n- Nike Kyrie Irving signature line in black/white\n- Air Jordan 1 High 'Brooklyn Nets'\n- Nike KD series in Nets colorways\n\nThe vintage Brooklyn Dodgers blue pairs well with:\n- Nike Air Force 1 '07 in royal blue/white\n- New Balance 990v5 in navy";
     }
@@ -50,7 +65,6 @@ const Index = () => {
       
       setMessages(newMessages);
 
-      // Generate sports/streetwear focused response
       const assistantMessage: Message = {
         role: 'assistant',
         content: generateResponse(content)
