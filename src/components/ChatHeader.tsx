@@ -19,14 +19,7 @@ const ChatHeader = ({ isSidebarOpen = true }: ChatHeaderProps) => {
           <span>🔥 New Releases: Check out the latest Pro Standard x NBA Collection!</span>
         </div>
       </div>
-      <div 
-        className="fixed top-8 z-30 w-full border-b border-[#4E4F60] bg-white/95 backdrop-blur"
-        style={{
-          backgroundImage: 'url(/lovable-uploads/de0cd9df-342d-4f20-acf4-46e5948ef0d0.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
+      <div className="fixed top-8 z-30 w-full border-b border-[#4E4F60] bg-white/95 backdrop-blur">
         <div className="flex h-[60px] items-center justify-between px-4 bg-white/80 backdrop-blur">
           <div className="flex items-center gap-2">
             <span className={`font-semibold gold-gradient ${!isSidebarOpen ? 'ml-24' : ''}`}>ProStandardGPT</span>

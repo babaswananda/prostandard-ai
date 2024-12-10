@@ -4,6 +4,10 @@
 
 body {
   @apply bg-chatgpt-main text-white;
+  background-image: url('/lovable-uploads/de0cd9df-342d-4f20-acf4-46e5948ef0d0.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 .sidebar-item {
