@@ -53,8 +53,8 @@ const ChatHeader = ({ isSidebarOpen = true }: ChatHeaderProps) => {
           </TooltipProvider>
 
           <span className="text-sm text-gray-600">Shaunee (Sales Rep)</span>
-          <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-[#1a1a1a] border border-[#4E4F60] text-white">
-            <UserRound className="h-5 w-5" />
+          <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-white border border-[#4E4F60]">
+            <UserRound className="h-5 w-5 text-black" />
           </div>
         </div>
       </div>
