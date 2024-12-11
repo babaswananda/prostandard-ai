@@ -14,7 +14,7 @@ const Message = ({ role, content }: MessageProps) => {
     const matches = text.match(imageUrlRegex) || [];
     
     return parts.map((part, index) => (
-      <>
+      <span key={`part-${index}`}>
         {part}
         {matches[index] && (
           <div className="mt-2 mb-2">
@@ -26,7 +26,7 @@ const Message = ({ role, content }: MessageProps) => {
             />
           </div>
         )}
-      </>
+      </span>
     ));
   };
 
