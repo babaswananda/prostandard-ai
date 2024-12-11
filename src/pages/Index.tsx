@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Sidebar from '@/components/Sidebar';
 import ChatHeader from '@/components/ChatHeader';
@@ -13,6 +13,17 @@ const Index = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+
+  const streamResponse = async (response: string, setContent: (content: string) => void) => {
+    let currentText = '';
+    const words = response.split(' ');
+    
+    for (let i = 0; i < words.length; i++) {
+      currentText += words[i] + ' ';
+      setContent(currentText.trim());
+      await new Promise(resolve => setTimeout(resolve, 30)); // Adjust speed as needed
+    }
+  };
 
   const handleSendMessage = async (content: string) => {
     if (!content.trim()) {
@@ -32,8 +43,6 @@ const Index = () => {
 
     setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
-
-    await new Promise(resolve => setTimeout(resolve, 1000));
 
     let response = "Welcome to Pro Standard! I'm delighted to introduce you to our luxury athletic collection. What particular piece catches your interest today?";
     
@@ -56,10 +65,19 @@ const Index = () => {
     const assistantMessage: Message = {
       id: uuidv4(),
       role: 'assistant',
-      content: response
+      content: ''
     };
 
     setMessages(prev => [...prev, assistantMessage]);
+
+    await streamResponse(response, (streamedContent) => {
+      setMessages(prev => prev.map(msg => 
+        msg.id === assistantMessage.id 
+          ? { ...msg, content: streamedContent }
+          : msg
+      ));
+    });
+
     setIsLoading(false);
   };
 
@@ -83,14 +101,21 @@ const Index = () => {
         break;
     }
 
-    setMessages(prev => [
-      ...prev,
-      {
-        id: uuidv4(),
-        role: 'assistant',
-        content: assistantMessage
-      }
-    ]);
+    const message: Message = {
+      id: uuidv4(),
+      role: 'assistant',
+      content: ''
+    };
+
+    setMessages(prev => [...prev, message]);
+
+    streamResponse(assistantMessage, (streamedContent) => {
+      setMessages(prev => prev.map(msg => 
+        msg.id === message.id 
+          ? { ...msg, content: streamedContent }
+          : msg
+      ));
+    });
   };
 
   const handleNewChat = () => {
