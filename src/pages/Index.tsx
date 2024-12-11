@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Sidebar from '@/components/Sidebar';
 import ChatHeader from '@/components/ChatHeader';
 import ChatInput from '@/components/ChatInput';
 import ActionButtons from '@/components/ActionButtons';
 import MessageList from '@/components/MessageList';
-import ApiKeyInput from '@/components/ApiKeyInput';
 import { Message } from '@/types/message';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -13,26 +12,9 @@ const Index = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [ollamaUrl, setOllamaUrl] = useState<string | null>(null);
   const { toast } = useToast();
 
-  useEffect(() => {
-    const storedUrl = localStorage.getItem('ollama_url');
-    if (storedUrl) {
-      setOllamaUrl(storedUrl);
-    }
-  }, []);
-
   const handleSendMessage = async (content: string) => {
-    if (!ollamaUrl) {
-      toast({
-        title: "Server URL Required",
-        description: "Please set your Ollama server URL first",
-        className: "bg-black/80 text-white border-none",
-      });
-      return;
-    }
-
     if (!content.trim()) {
       toast({
         title: "Message Required",
@@ -51,42 +33,30 @@ const Index = () => {
     setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
 
-    try {
-      const response = await fetch(`${ollamaUrl}/api/generate`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: 'llama2:3.3',
-          prompt: content,
-          stream: false
-        }),
-      });
+    // Simulate a delay for a more natural feel
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
-      if (!response.ok) {
-        throw new Error('Failed to get response from Ollama');
-      }
-
-      const data = await response.json();
-      
-      const assistantMessage: Message = {
-        id: uuidv4(),
-        role: 'assistant',
-        content: data.response || 'Sorry, I could not generate a response.'
-      };
-
-      setMessages(prev => [...prev, assistantMessage]);
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to get response from Ollama. Please check your server URL and ensure Ollama is running.",
-        variant: "destructive",
-        className: "bg-black/80 text-white border-none",
-      });
-    } finally {
-      setIsLoading(false);
+    let response = "Welcome to Pro Standard! I'd be happy to help you with our luxury athletic collection. ";
+    
+    // Simple keyword matching for demo purposes
+    if (content.toLowerCase().includes('wingspan')) {
+      response = "The new WINGSPAN hoodie collection is a premium Philadelphia design, available as a limited holiday release within 72 hours. Would you like to see the available styles and sizes?";
+    } else if (content.toLowerCase().includes('sneaker')) {
+      response = "Our Sneaker Tie Backs are perfect gift options that pair well with December shoe releases. You can view the full collection at brandboom.com/app/a/9B78CADB770. Would you like to know more about specific styles?";
+    } else if (content.toLowerCase().includes('team')) {
+      response = "We offer premium collections for various teams, including exclusive partnerships with Brooklyn, Atlanta, and Tampa. Which team's collection would you like to explore?";
+    } else if (content.toLowerCase().includes('holiday')) {
+      response = "Our holiday collection features the new WINGSPAN hoodie, Sneaker Tie Backs, and PENNANTS collection. Each piece is crafted with premium materials and exclusive designs. Would you like to see specific items?";
     }
+
+    const assistantMessage: Message = {
+      id: uuidv4(),
+      role: 'assistant',
+      content: response
+    };
+
+    setMessages(prev => [...prev, assistantMessage]);
+    setIsLoading(false);
   };
 
   const handleActionMessage = (title: string) => {
@@ -128,14 +98,6 @@ const Index = () => {
     });
   };
 
-  if (!ollamaUrl) {
-    return (
-      <div className="flex h-screen items-center justify-center bg-gray-900">
-        <ApiKeyInput onApiKeySet={setOllamaUrl} />
-      </div>
-    );
-  }
-
   return (
     <div className="flex h-screen">
       <div className="fixed left-0 top-0 z-50 h-full">
@@ -144,7 +106,7 @@ const Index = () => {
           onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
           onApiKeyChange={() => {}} 
           onNewChat={handleNewChat}
-          onChatResponse={() => {}}
+          onChatResponse={handleSendMessage}
         />
       </div>
       
