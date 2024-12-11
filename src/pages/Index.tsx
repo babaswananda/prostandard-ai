@@ -55,7 +55,7 @@ const Index = () => {
     setMessages(prev => [...prev, assistantMessage]);
 
     try {
-      const { data: stream } = await supabase.functions.invoke('chat-with-mistral', {
+      const response = await supabase.functions.invoke('chat-with-mistral', {
         body: {
           messages: messages.concat(userMessage).map(msg => ({
             role: msg.role,
@@ -64,11 +64,15 @@ const Index = () => {
         }
       });
 
-      if (!stream) {
+      if (!response.data) {
         throw new Error('No response from chat function');
       }
 
-      const reader = stream.getReader();
+      const reader = new Response(response.data).body?.getReader();
+      if (!reader) {
+        throw new Error('Failed to create stream reader');
+      }
+
       const decoder = new TextDecoder();
       let responseText = '';
 

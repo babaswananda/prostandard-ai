@@ -38,7 +38,7 @@ Key collections to reference:
 
     console.log('Sending request to Mistral:', { messages: fullMessages })
 
-    const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+    const mistralResponse = await fetch('https://api.mistral.ai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -52,9 +52,24 @@ Key collections to reference:
       }),
     })
 
+    // Create a TransformStream to modify the response
+    const transformStream = new TransformStream({
+      transform(chunk, controller) {
+        controller.enqueue(chunk)
+      },
+    })
+
+    // Pipe the response through our transform stream
+    const stream = mistralResponse.body.pipeThrough(transformStream)
+
     // Return the streaming response
-    return new Response(response.body, {
-      headers: { ...corsHeaders, 'Content-Type': 'text/event-stream' }
+    return new Response(stream, {
+      headers: { 
+        ...corsHeaders,
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive'
+      }
     })
 
   } catch (error) {
