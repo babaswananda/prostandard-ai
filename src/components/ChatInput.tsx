@@ -32,11 +32,10 @@ const ChatInput = ({ onSend, isLoading = false }: ChatInputProps) => {
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Ask about team gear, sizes, or color matches..."
-          className="chat-input"
+          className="chat-input bg-[#1a1a1a]/50"
           style={{ maxHeight: "200px" }}
           disabled={isLoading}
         />
-        <div className="absolute inset-0 bg-[#1a1a1a] opacity-50 rounded-2xl z-10" />
         <button 
           onClick={handleSubmit}
           disabled={isLoading || !message.trim()}
