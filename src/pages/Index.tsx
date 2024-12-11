@@ -8,34 +8,26 @@ import MessageList from '@/components/MessageList';
 import ApiKeyInput from '@/components/ApiKeyInput';
 import { Message } from '@/types/message';
 import { v4 as uuidv4 } from 'uuid';
-import OpenAI from 'openai';
 
 const Index = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [openai, setOpenai] = useState<OpenAI | null>(null);
+  const [ollamaUrl, setOllamaUrl] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
-    const storedApiKey = localStorage.getItem('openai_api_key');
-    if (storedApiKey) {
-      initializeOpenAI(storedApiKey);
+    const storedUrl = localStorage.getItem('ollama_url');
+    if (storedUrl) {
+      setOllamaUrl(storedUrl);
     }
   }, []);
 
-  const initializeOpenAI = (apiKey: string) => {
-    setOpenai(new OpenAI({
-      apiKey,
-      dangerouslyAllowBrowser: true
-    }));
-  };
-
   const handleSendMessage = async (content: string) => {
-    if (!openai) {
+    if (!ollamaUrl) {
       toast({
-        title: "API Key Required",
-        description: "Please set your OpenAI API key first",
+        title: "Server URL Required",
+        description: "Please set your Ollama server URL first",
         className: "bg-black/80 text-white border-none",
       });
       return;
@@ -60,25 +52,35 @@ const Index = () => {
     setIsLoading(true);
 
     try {
-      const completion = await openai.chat.completions.create({
-        messages: [...messages, userMessage].map(msg => ({
-          role: msg.role,
-          content: msg.content
-        })),
-        model: "gpt-4",
+      const response = await fetch(`${ollamaUrl}/api/generate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'llama2:3.3',
+          prompt: content,
+          stream: false
+        }),
       });
 
+      if (!response.ok) {
+        throw new Error('Failed to get response from Ollama');
+      }
+
+      const data = await response.json();
+      
       const assistantMessage: Message = {
         id: uuidv4(),
         role: 'assistant',
-        content: completion.choices[0]?.message?.content || 'Sorry, I could not generate a response.'
+        content: data.response || 'Sorry, I could not generate a response.'
       };
 
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to get response. Please try again.",
+        description: "Failed to get response from Ollama. Please check your server URL and ensure Ollama is running.",
         variant: "destructive",
         className: "bg-black/80 text-white border-none",
       });
@@ -126,10 +128,10 @@ const Index = () => {
     });
   };
 
-  if (!openai) {
+  if (!ollamaUrl) {
     return (
       <div className="flex h-screen items-center justify-center bg-gray-900">
-        <ApiKeyInput onApiKeySet={initializeOpenAI} />
+        <ApiKeyInput onApiKeySet={setOllamaUrl} />
       </div>
     );
   }
