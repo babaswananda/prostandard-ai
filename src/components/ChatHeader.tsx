@@ -1,51 +1,11 @@
-import { ChevronDown, Phone, Mail } from "lucide-react";
-import { Button } from "./ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./ui/tooltip";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+import { ContactButtons } from "./header/ContactButtons";
+import { ModelSelector } from "./header/ModelSelector";
 
 interface ChatHeaderProps {
   isSidebarOpen?: boolean;
 }
 
 const ChatHeader = ({ isSidebarOpen = true }: ChatHeaderProps) => {
-  const handlePhoneClick = () => {
-    window.location.href = "tel:770-608-0494";
-  };
-
-  const handleEmailClick = () => {
-    window.location.href = "mailto:shaunee.southsales@gmail.com";
-  };
-
-  const handleModelSelect = (model: string) => {
-    let message = "";
-    switch (model) {
-      case "personal-stylist":
-        message = "Welcome to your Personal Stylist! I specialize in creating perfect outfit combinations with our luxury athletic wear. How can I help style you today?";
-        break;
-      case "size-expert":
-        message = "I'm your Size Expert! Let me help you find the perfect fit across our collections. What piece are you interested in?";
-        break;
-      case "trend-advisor":
-        message = "As your Trend Advisor, I'll keep you updated on our latest releases and upcoming collections. What trends are you interested in?";
-        break;
-      case "team-specialist":
-        message = "I'm your Team Specialist! I can help you explore our exclusive team collections and limited editions. Which team are you passionate about?";
-        break;
-    }
-    console.log(message);
-    // Here you would typically update the model and message in your application state
-  };
-
   return (
     <div className="fixed top-0 z-30 w-full border-b border-[#4E4F60] bg-white/95 backdrop-blur">
       <div className="flex h-[60px] items-center justify-between px-4">
@@ -57,77 +17,10 @@ const ChatHeader = ({ isSidebarOpen = true }: ChatHeaderProps) => {
               className="h-8 w-auto"
             />
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <ChevronDown className="h-4 w-4 text-black" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-[200px] bg-white/95 backdrop-blur border border-[#4E4F60]">
-              <DropdownMenuItem 
-                onClick={() => handleModelSelect("personal-stylist")}
-                className="transition-all duration-200 hover:bg-prostandard-hover hover:pl-6 hover:text-prostandard-gold"
-              >
-                Personal Stylist (Best for Outfit Matching)
-              </DropdownMenuItem>
-              <DropdownMenuItem 
-                onClick={() => handleModelSelect("size-expert")}
-                className="transition-all duration-200 hover:bg-prostandard-hover hover:pl-6 hover:text-prostandard-gold"
-              >
-                Size Expert (Perfect Fit Guide)
-              </DropdownMenuItem>
-              <DropdownMenuItem 
-                onClick={() => handleModelSelect("trend-advisor")}
-                className="transition-all duration-200 hover:bg-prostandard-hover hover:pl-6 hover:text-prostandard-gold"
-              >
-                Trend Advisor (Latest Releases)
-              </DropdownMenuItem>
-              <DropdownMenuItem 
-                onClick={() => handleModelSelect("team-specialist")}
-                className="transition-all duration-200 hover:bg-prostandard-hover hover:pl-6 hover:text-prostandard-gold"
-              >
-                Team Specialist (Collection Expert)
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <ModelSelector />
         </div>
         <div className="flex items-center gap-4">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className="text-gray-600 hover:text-gray-900"
-                  onClick={handlePhoneClick}
-                >
-                  <Phone className="h-4 w-4 text-black" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>770-608-0494</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className="text-gray-600 hover:text-gray-900"
-                  onClick={handleEmailClick}
-                >
-                  <Mail className="h-4 w-4 text-black" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>shaunee.southsales@gmail.com</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
+          <ContactButtons />
           <span className="text-sm text-gray-600">Shaunee (Sales Rep)</span>
           <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-white border border-[#4E4F60]">
             <img
