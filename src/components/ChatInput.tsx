@@ -36,10 +36,11 @@ const ChatInput = ({ onSend, isLoading = false }: ChatInputProps) => {
           style={{ maxHeight: "200px" }}
           disabled={isLoading}
         />
+        <div className="absolute inset-0 bg-[#1a1a1a] opacity-50 rounded-2xl z-10" />
         <button 
           onClick={handleSubmit}
           disabled={isLoading || !message.trim()}
-          className="absolute right-3 top-[50%] -translate-y-[50%] p-1.5 bg-[#BF953F] hover:bg-[#AA771C] rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 z-20"
+          className="absolute right-3 top-[50%] -translate-y-[50%] p-1.5 bg-[#BF953F] hover:bg-[#AA771C] rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 z-30"
         >
           {isLoading ? (
             <Loader2 className="h-4 w-4 text-white animate-spin" />
