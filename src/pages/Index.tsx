@@ -15,6 +15,18 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
+  const streamResponse = (text: string, callback: (content: string) => void) => {
+    let currentIndex = 0;
+    const streamInterval = setInterval(() => {
+      if (currentIndex < text.length) {
+        callback(text.slice(0, currentIndex + 1));
+        currentIndex++;
+      } else {
+        clearInterval(streamInterval);
+      }
+    }, 20);
+  };
+
   const handleSendMessage = async (content: string) => {
     if (!content.trim()) {
       toast({
@@ -43,7 +55,6 @@ const Index = () => {
     setMessages(prev => [...prev, assistantMessage]);
 
     try {
-      // Call the Mistral Edge Function
       const { data: stream } = await supabase.functions.invoke('chat-with-mistral', {
         body: {
           messages: messages.concat(userMessage).map(msg => ({
@@ -139,15 +150,6 @@ const Index = () => {
     });
   };
 
-  const handleNewChat = () => {
-    setMessages([]);
-    toast({
-      title: "Chat Cleared",
-      description: "Started a new conversation",
-      className: "bg-black/80 text-white border-none",
-    });
-  };
-
   return (
     <div className="flex h-screen">
       <div className="fixed left-0 top-0 z-50 h-full">
@@ -155,7 +157,7 @@ const Index = () => {
           isOpen={isSidebarOpen} 
           onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
           onApiKeyChange={() => {}} 
-          onNewChat={handleNewChat}
+          onNewChat={() => setMessages([])}
           onChatResponse={handleSendMessage}
         />
       </div>
