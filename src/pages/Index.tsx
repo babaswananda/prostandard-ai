@@ -21,19 +21,19 @@ const Index = () => {
     let assistantMessage = "";
     switch (title) {
       case "Team Gear":
-        assistantMessage = "I'd be happy to help you explore our team gear collection. We have exclusive partnerships with major sports teams and offer premium quality merchandise. What specific team are you interested in?";
+        assistantMessage = "Welcome to Pro Standard's exclusive team collection! We specialize in premium athletic wear and accessories. Which team's collection would you like to explore? We have exclusive partnerships with major teams in Brooklyn, Atlanta, Tampa, and more.";
         break;
       case "Size Finder":
-        assistantMessage = "Let me help you find the perfect size. Our luxury athletic wear is designed for optimal fit. Could you tell me your usual size and preferred fit (regular, slim, or relaxed)?";
+        assistantMessage = "Let me help you find your perfect size in our luxury athletic wear. Our sizing is designed for optimal fit and comfort. Could you tell me:\n\n1. Your usual size in athletic wear\n2. Your preferred fit (regular, slim, or relaxed)\n3. The specific item you're interested in?";
         break;
       case "New Releases":
-        assistantMessage = "Here are our latest drops:\n\n1. Los Angeles Dodgers Sublimated Satin Jacket\n- Premium satin finish\n- Exclusive design\n- Limited quantities\n\n2. New York Yankees Heritage Collection\n- Authentic materials\n- Vintage-inspired\n\nWould you like to learn more about any of these items?";
+        assistantMessage = "Here are our latest exclusive drops:\n\n1. Los Angeles Dodgers Sublimated Satin Jacket\n- Premium satin finish\n- Exclusive design\n- Limited quantities\n\n2. Brooklyn Nets Heritage Collection\n- Authentic materials\n- Vintage-inspired\n\n3. Atlanta Hawks Signature Series\n- Custom embroidery\n- Premium materials\n\nWhich collection would you like to learn more about?";
         break;
       case "Color Match":
-        assistantMessage = "I can help you create the perfect color-coordinated outfit. Our collections are designed with complementary color schemes. What's the main piece or color you'd like to build around?";
+        assistantMessage = "I'll help you create the perfect color-coordinated outfit. Our collections are designed with complementary color schemes. Let's start with:\n\n1. What team gear are you looking to match?\n2. Do you prefer bold or subtle coordination?\n3. Any specific sneakers you'd like to match with?";
         break;
       case "Limited Editions":
-        assistantMessage = "You're in luck! We just released these exclusive items:\n\n1. Brooklyn Nets x Pro Standard Gold Series\n2. LA Lakers Championship Collection\n3. Miami Heat Special Edition\n\nWhich collection interests you?";
+        assistantMessage = "You've accessed our exclusive Limited Editions section! Currently available:\n\n1. Brooklyn Nets x Pro Standard Gold Series\n- Only 100 pieces worldwide\n- Numbered editions\n- Certificate of authenticity\n\n2. LA Dodgers Championship Collection\n- Commemorative design\n- Premium materials\n- Exclusive colorway\n\nWhich exclusive piece interests you?";
         break;
     }
 
@@ -46,9 +46,9 @@ const Index = () => {
   const handleSendMessage = async (content: string) => {
     if (!content.trim()) {
       toast({
-        title: "Error",
-        description: "Please enter a message",
-        variant: "destructive"
+        title: "Message Required",
+        description: "Please enter a message to continue",
+        className: "bg-black/80 text-white border-none",
       });
       return;
     }
@@ -63,6 +63,7 @@ const Index = () => {
       
       setMessages(newMessages);
 
+      // Generate response based on user input
       const assistantMessage: Message = {
         role: 'assistant',
         content: generateResponse(content)
@@ -72,8 +73,9 @@ const Index = () => {
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message,
-        variant: "destructive"
+        description: error.message || "Something went wrong",
+        variant: "destructive",
+        className: "bg-black/80 text-white border-none",
       });
     } finally {
       setIsLoading(false);
@@ -81,31 +83,33 @@ const Index = () => {
   };
 
   const generateResponse = (content: string) => {
-    if (content.toLowerCase().includes('what teams are hot') || content.toLowerCase().includes('hot teams')) {
-      return "Right now, we're seeing huge demand for these hot items:\n\n" +
-        "1. Los Angeles Dodgers Sublimated Satin Jacket\n" +
-        "- Style ID: LLD6314753\n" +
-        "- Premium satin finish with stunning sublimated design\n" +
-        "- Features classic Dodgers logo with crossed bats\n" +
-        "- Available in sizes S-3XL\n" +
-        "- Retail price: $175.00\n\n" +
-        "2. Air Jordan 12 'White/Game Royal'\n" +
-        "- Style #: CT8013-140\n" +
-        "- Release Date: December 18, 2024\n" +
-        "- Price: $210\n" +
-        "- Perfect match for Dodgers gear with its white/black/game royal colorway\n\n" +
-        "Would you like to know more about sizing or see other team matches?";
+    const lowerContent = content.toLowerCase();
+    
+    // Team-specific responses
+    if (lowerContent.includes('brooklyn') || lowerContent.includes('nets')) {
+      return "Pro Standard's Brooklyn collection is one of our most popular lines. Current bestsellers:\n\n1. Brooklyn Nets Heritage Jacket\n- Black/White colorway\n- Premium leather patches\n- Sizes S-3XL\n- $225.00\n\n2. Nets Court Collection Hoodie\n- Premium cotton blend\n- Embroidered logos\n- $145.00\n\nWould you like to see more items or get sizing information?";
     }
-    if (content.toLowerCase().includes('best selling teams in brooklyn')) {
-      return "In Brooklyn, the Nets dominate sales at Pro Standard, with their black and white colorways being particularly popular. The retro Brooklyn Dodgers merchandise also maintains strong sales due to the historic connection. For sneakers that complement these teams:\n\n1. Brooklyn Nets:\n- Nike Kyrie Irving signature line in black/white\n- Air Jordan 1 High 'Brooklyn Nets'\n- Nike KD series in Nets colorways\n\nThe vintage Brooklyn Dodgers blue pairs well with:\n- Nike Air Force 1 '07 in royal blue/white\n- New Balance 990v5 in navy";
+    
+    if (lowerContent.includes('atlanta') || lowerContent.includes('hawks')) {
+      return "Our Atlanta Hawks collection features premium streetwear with authentic team designs:\n\n1. Hawks Signature Varsity Jacket\n- Red/Gold premium wool blend\n- Leather sleeves\n- $275.00\n\n2. ATL Court Culture Hoodie\n- Limited edition design\n- Premium cotton blend\n- $165.00\n\nWould you like to see more from the Atlanta collection?";
     }
-    if (content.toLowerCase().includes('best selling teams in atlanta')) {
-      return "In Atlanta, the Hawks and Braves lead Pro Standard sales. The Hawks' red and yellow colorway and the Braves' navy and red are particularly strong sellers. Popular sneaker matches include:\n\n1. Atlanta Hawks:\n- Air Jordan 1 'Bred' or 'Chicago'\n- Nike Trae Young signature line\n- Adidas Dame series in Hawks colors\n\n2. Atlanta Braves:\n- New Balance 990v5 in navy/red\n- Nike Air Max 90 in navy/red combinations";
+    
+    if (lowerContent.includes('tampa') || lowerContent.includes('buccaneers')) {
+      return "Tampa Bay collection highlights:\n\n1. Buccaneers Premium Varsity Jacket\n- Pewter/Red colorway\n- Custom embroidery\n- $245.00\n\n2. Tampa Bay Limited Edition Cap\n- New Era collaboration\n- Exclusive design\n- $75.00\n\nWould you like details on sizing or other items?";
     }
-    if (content.toLowerCase().includes('tampa florida')) {
-      return "In Tampa, the Buccaneers and Lightning dominate Pro Standard sales. Key sneaker matches:\n\n1. Tampa Bay Buccaneers:\n- Nike Air Max 90 in pewter/red\n- Air Jordan 1 'Bred' colorway\n- Under Armour Curry line in team colors\n\n2. Tampa Bay Lightning:\n- Nike Air Force 1 in blue/white\n- Adidas Forum Low in royal blue\n- New Balance 550 in white/blue";
+
+    // Size and fit responses
+    if (lowerContent.includes('size') || lowerContent.includes('fit')) {
+      return "Pro Standard sizing guide:\n\nOur luxury athletic wear typically runs true to size with a slightly relaxed fit. For the best fit:\n\n- Jerseys: Order your normal size for a relaxed fit, size down for a closer fit\n- Hoodies: True to size with room for layering\n- Jackets: Size up if you plan to wear heavy layers underneath\n\nWould you like specific measurements for any item?";
     }
-    return "Welcome to ProStandardGPT! I'm your luxury athletic and streetwear specialist, trained on Pro Standard's premium licensed sports collections. How can I help you find the perfect team gear or sneaker matches today?";
+
+    // Color matching responses
+    if (lowerContent.includes('color') || lowerContent.includes('match')) {
+      return "Pro Standard color matching guide:\n\n1. For Brooklyn Nets gear:\n- Air Jordan 1 High 'Shadow'\n- Nike Dunk Low 'Black/White'\n\n2. For Hawks gear:\n- Air Jordan 1 'Bred'\n- Nike Dunk High 'Varsity Red'\n\nWould you like more color combination suggestions?";
+    }
+
+    // Default welcome message
+    return "Welcome to Pro Standard! I'm your luxury athletic wear specialist. I can help you with:\n\n- Team collections\n- Size and fit guidance\n- Color matching\n- Limited editions\n\nWhat would you like to explore?";
   };
 
   return (
@@ -126,7 +130,7 @@ const Index = () => {
                 <h1 className="mb-8 text-4xl font-semibold text-center gold-gradient">Find Your Perfect Team Gear Match</h1>
                 <ChatInput onSend={handleSendMessage} isLoading={isLoading} />
               </div>
-              <ActionButtons onAction={(title) => handleActionMessage(title)} />
+              <ActionButtons onAction={handleActionMessage} />
             </div>
           ) : (
             <>
@@ -135,7 +139,7 @@ const Index = () => {
                 <ChatInput onSend={handleSendMessage} isLoading={isLoading} />
               </div>
               <div className="text-xs text-center text-gray-500 py-2">
-                ProStandardGPT - Your Luxury Athletic Collection Assistant
+                ProStandard AI - Your Luxury Athletic Collection Assistant
               </div>
             </>
           )}
