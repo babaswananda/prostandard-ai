@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-chatgpt-main text-white;
+  @apply bg-prostandard-main text-black;
   background-image: url('https://teamprostandard.com/cdn/shop/files/DSC01059_1_-2_1024x1024.jpg?v=1693418816');
   background-size: cover;
   background-position: center;
@@ -12,11 +12,11 @@ body {
 }
 
 .sidebar-item {
-  @apply flex items-center gap-3 rounded-md px-3 py-3 text-sm transition-colors duration-200 hover:bg-chatgpt-hover cursor-pointer;
+  @apply flex items-center gap-3 rounded-md px-3 py-3 text-sm transition-colors duration-200 hover:bg-prostandard-hover cursor-pointer;
 }
 
 .action-button {
-  @apply flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-chatgpt-hover/50 border border-[#4E4F60] hover:border-[#6e6f80] transition-all duration-200 bg-[#1a1a1a];
+  @apply flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-prostandard-hover/50 border border-[#4E4F60] hover:border-[#6e6f80] transition-all duration-200 bg-[#1a1a1a];
 }
 
 .chat-input {
