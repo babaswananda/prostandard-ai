@@ -49,11 +49,17 @@ const ChatHeader = ({ isSidebarOpen = true }: ChatHeaderProps) => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-[200px]">
-              <DropdownMenuItem onClick={() => handleModelSelect("gpt-4o")}>
-                GPT-4o (Best Results)
+              <DropdownMenuItem onClick={() => handleModelSelect("personal-stylist")}>
+                Personal Stylist (Best for Outfit Matching)
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleModelSelect("gpt-4o-mini")}>
-                GPT-4o Mini (Fastest)
+              <DropdownMenuItem onClick={() => handleModelSelect("size-expert")}>
+                Size Expert (Perfect Fit Guide)
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleModelSelect("trend-advisor")}>
+                Trend Advisor (Latest Releases)
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleModelSelect("team-specialist")}>
+                Team Specialist (Collection Expert)
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
