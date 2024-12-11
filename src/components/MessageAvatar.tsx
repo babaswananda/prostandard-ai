@@ -8,7 +8,7 @@ const MessageAvatar = ({ isAssistant }: { isAssistant: boolean }) => {
           className="h-full w-full rounded-full object-cover"
           onError={(e) => {
             const target = e.target as HTMLImageElement;
-            target.src = `https://ui-avatars.com/api/?name=Pro+Standard&background=random`;
+            target.src = `https://ui-avatars.com/api/?name=Shaunee&background=random`;
           }}
         />
       </div>

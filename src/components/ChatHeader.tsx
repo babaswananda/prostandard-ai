@@ -28,6 +28,7 @@ const ChatHeader = ({ isSidebarOpen = true }: ChatHeaderProps) => {
 
   const handleModelSelect = (model: string) => {
     console.log(`Selected model: ${model}`);
+    // Here you would typically update the model in your application state
   };
 
   return (
