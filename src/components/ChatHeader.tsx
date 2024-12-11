@@ -48,17 +48,29 @@ const ChatHeader = ({ isSidebarOpen = true }: ChatHeaderProps) => {
                 <ChevronDown className="h-4 w-4 text-black" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-[200px]">
-              <DropdownMenuItem onClick={() => handleModelSelect("personal-stylist")}>
+            <DropdownMenuContent align="start" className="w-[200px] bg-white/95 backdrop-blur border border-[#4E4F60]">
+              <DropdownMenuItem 
+                onClick={() => handleModelSelect("personal-stylist")}
+                className="hover:bg-gray-100 transition-colors duration-200"
+              >
                 Personal Stylist (Best for Outfit Matching)
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleModelSelect("size-expert")}>
+              <DropdownMenuItem 
+                onClick={() => handleModelSelect("size-expert")}
+                className="hover:bg-gray-100 transition-colors duration-200"
+              >
                 Size Expert (Perfect Fit Guide)
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleModelSelect("trend-advisor")}>
+              <DropdownMenuItem 
+                onClick={() => handleModelSelect("trend-advisor")}
+                className="hover:bg-gray-100 transition-colors duration-200"
+              >
                 Trend Advisor (Latest Releases)
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleModelSelect("team-specialist")}>
+              <DropdownMenuItem 
+                onClick={() => handleModelSelect("team-specialist")}
+                className="hover:bg-gray-100 transition-colors duration-200"
+              >
                 Team Specialist (Collection Expert)
               </DropdownMenuItem>
             </DropdownMenuContent>
