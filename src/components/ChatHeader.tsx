@@ -51,25 +51,25 @@ const ChatHeader = ({ isSidebarOpen = true }: ChatHeaderProps) => {
             <DropdownMenuContent align="start" className="w-[200px] bg-white/95 backdrop-blur border border-[#4E4F60]">
               <DropdownMenuItem 
                 onClick={() => handleModelSelect("personal-stylist")}
-                className="hover:bg-gray-100 transition-colors duration-200"
+                className="transition-all duration-200 hover:bg-prostandard-hover hover:pl-6 hover:text-prostandard-gold"
               >
                 Personal Stylist (Best for Outfit Matching)
               </DropdownMenuItem>
               <DropdownMenuItem 
                 onClick={() => handleModelSelect("size-expert")}
-                className="hover:bg-gray-100 transition-colors duration-200"
+                className="transition-all duration-200 hover:bg-prostandard-hover hover:pl-6 hover:text-prostandard-gold"
               >
                 Size Expert (Perfect Fit Guide)
               </DropdownMenuItem>
               <DropdownMenuItem 
                 onClick={() => handleModelSelect("trend-advisor")}
-                className="hover:bg-gray-100 transition-colors duration-200"
+                className="transition-all duration-200 hover:bg-prostandard-hover hover:pl-6 hover:text-prostandard-gold"
               >
                 Trend Advisor (Latest Releases)
               </DropdownMenuItem>
               <DropdownMenuItem 
                 onClick={() => handleModelSelect("team-specialist")}
-                className="hover:bg-gray-100 transition-colors duration-200"
+                className="transition-all duration-200 hover:bg-prostandard-hover hover:pl-6 hover:text-prostandard-gold"
               >
                 Team Specialist (Collection Expert)
               </DropdownMenuItem>
