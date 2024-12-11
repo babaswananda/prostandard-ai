@@ -130,16 +130,20 @@ const Index = () => {
 
   return (
     <div className="flex h-screen">
-      <Sidebar 
-        isOpen={isSidebarOpen} 
-        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
-        onApiKeyChange={() => {}} 
-        onNewChat={handleNewChat}
-        onChatResponse={handleChatResponse}
-      />
+      <div className="fixed left-0 top-0 z-50 h-full">
+        <Sidebar 
+          isOpen={isSidebarOpen} 
+          onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+          onApiKeyChange={() => {}} 
+          onNewChat={handleNewChat}
+          onChatResponse={handleChatResponse}
+        />
+      </div>
       
       <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-0'}`}>
-        <ChatHeader isSidebarOpen={isSidebarOpen} />
+        <div className="fixed top-0 left-0 right-0 z-40">
+          <ChatHeader isSidebarOpen={isSidebarOpen} />
+        </div>
         
         <div className={`flex h-full flex-col ${messages.length === 0 ? 'items-center justify-center' : 'justify-between'} pt-[60px] pb-4`}>
           {messages.length === 0 ? (
