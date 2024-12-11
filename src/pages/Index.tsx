@@ -7,7 +7,6 @@ import ActionButtons from '@/components/ActionButtons';
 import MessageList from '@/components/MessageList';
 import { Message } from '@/types/message';
 import { v4 as uuidv4 } from 'uuid';
-import { supabase } from '@/integrations/supabase/client';
 
 const Index = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -15,20 +14,15 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const streamText = (text: string, messageId: string, speed: number = 20) => {
-    let currentIndex = 0;
-    const streamInterval = setInterval(() => {
-      if (currentIndex < text.length) {
-        setMessages(prev => prev.map(msg =>
-          msg.id === messageId
-            ? { ...msg, content: text.slice(0, currentIndex + 1) }
-            : msg
-        ));
-        currentIndex++;
-      } else {
-        clearInterval(streamInterval);
-      }
-    }, speed);
+  const streamResponse = async (response: string, setContent: (content: string) => void) => {
+    let currentText = '';
+    const words = response.split(' ');
+    
+    for (let i = 0; i < words.length; i++) {
+      currentText += words[i] + ' ';
+      setContent(currentText.trim());
+      await new Promise(resolve => setTimeout(resolve, 30)); // Adjust speed as needed
+    }
   };
 
   const handleSendMessage = async (content: string) => {
@@ -50,6 +44,24 @@ const Index = () => {
     setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
 
+    let response = "Welcome to Pro Standard! I'm delighted to introduce you to our luxury athletic collection. What particular piece catches your interest today?";
+    
+    const contentLower = content.toLowerCase();
+    
+    if (contentLower.includes('wingspan')) {
+      response = "Ah, you've got excellent taste! Our new WINGSPAN hoodie is truly a masterpiece of Philadelphia-inspired luxury streetwear. It's a limited holiday release, crafted with premium materials and attention to detail that Pro Standard is known for. Available within 72 hours, you can explore the collection at www.brandboom.com/app/a/E309C507924. Would you like me to walk you through the unique features and styling options?";
+    } else if (contentLower.includes('sneaker') || contentLower.includes('tie back')) {
+      response = "Perfect timing! Our Sneaker Tie Backs are the ultimate accessory for the discerning collector. They're designed to complement this December's most anticipated shoe releases. View our curated selection at www.brandboom.com/app/a/9B78CADB770. May I suggest some exclusive styling combinations that are particularly popular this season?";
+    } else if (contentLower.includes('nfl') && contentLower.includes('team')) {
+      response = "You're just in time for Week 14's finest selections! I'm excited to share our Best in Division pieces at www.brandboom.com/app/a/81598162307. Each piece is a testament to luxury sports fashion. For our complete NFL collection, visit www.brandboom.com/app/a/9F416FC9538. Which division's style interests you most?";
+    } else if (contentLower.includes('college')) {
+      response = "Ah, you'll love our latest College collection! We've just added some exceptional Colorado pieces that are causing quite a stir. The entire collegiate collection showcases our commitment to premium athletic wear. Browse the full range at www.brandboom.com/app/a/AC4A7D8952C. Shall I highlight some of our bestselling university designs?";
+    } else if (contentLower.includes('mash up') || contentLower.includes('classic')) {
+      response = "The MASH UP classics are truly special - they're the cornerstone of our luxury athletic heritage. Each piece in this collection at www.brandboom.com/app/a/1EB1F5270F7 combines timeless design with premium materials and authentic team logos. Would you like to see how our most distinguished clients are styling these pieces?";
+    } else if (contentLower.includes('pennant')) {
+      response = "Our new PENNANTS Holiday Collection is causing quite a sensation! Each piece is a celebration of athletic luxury, available at www.brandboom.com/app/a/28D699E1686. The attention to detail and premium materials make these perfect for the discerning collector. Would you like to see our most sought-after designs?";
+    }
+
     const assistantMessage: Message = {
       id: uuidv4(),
       role: 'assistant',
@@ -58,67 +70,15 @@ const Index = () => {
 
     setMessages(prev => [...prev, assistantMessage]);
 
-    try {
-      const response = await supabase.functions.invoke('chat-with-mistral', {
-        body: {
-          messages: messages.concat(userMessage).map(msg => ({
-            role: msg.role,
-            content: msg.content
-          }))
-        }
-      });
+    await streamResponse(response, (streamedContent) => {
+      setMessages(prev => prev.map(msg => 
+        msg.id === assistantMessage.id 
+          ? { ...msg, content: streamedContent }
+          : msg
+      ));
+    });
 
-      if (!response.data) {
-        throw new Error('No response from chat function');
-      }
-
-      const reader = new Response(response.data).body?.getReader();
-      if (!reader) {
-        throw new Error('Failed to create stream reader');
-      }
-
-      const decoder = new TextDecoder();
-      let responseText = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        const chunk = decoder.decode(value);
-        const lines = chunk.split('\n');
-        
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            const data = line.slice(6);
-            if (data === '[DONE]') continue;
-            
-            try {
-              const parsed = JSON.parse(data);
-              const content = parsed.choices[0]?.delta?.content || '';
-              responseText += content;
-              
-              setMessages(prev => prev.map(msg =>
-                msg.id === assistantMessage.id
-                  ? { ...msg, content: responseText }
-                  : msg
-              ));
-            } catch (e) {
-              console.error('Error parsing SSE message:', e);
-            }
-          }
-        }
-      }
-
-    } catch (error) {
-      console.error('Error sending message:', error);
-      toast({
-        title: "Error",
-        description: "Failed to send message. Please try again.",
-        className: "bg-black/80 text-white border-none",
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    setIsLoading(false);
   };
 
   const handleActionMessage = (title: string) => {
@@ -148,7 +108,23 @@ const Index = () => {
     };
 
     setMessages(prev => [...prev, message]);
-    streamText(assistantMessage, message.id);
+
+    streamResponse(assistantMessage, (streamedContent) => {
+      setMessages(prev => prev.map(msg => 
+        msg.id === message.id 
+          ? { ...msg, content: streamedContent }
+          : msg
+      ));
+    });
+  };
+
+  const handleNewChat = () => {
+    setMessages([]);
+    toast({
+      title: "Chat Cleared",
+      description: "Started a new conversation",
+      className: "bg-black/80 text-white border-none",
+    });
   };
 
   return (
@@ -158,7 +134,7 @@ const Index = () => {
           isOpen={isSidebarOpen} 
           onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
           onApiKeyChange={() => {}} 
-          onNewChat={() => setMessages([])}
+          onNewChat={handleNewChat}
           onChatResponse={handleSendMessage}
         />
       </div>
