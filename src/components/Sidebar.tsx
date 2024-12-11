@@ -1,4 +1,4 @@
-import { Menu, Globe, ChevronDown, Key } from "lucide-react";
+import { Menu, Search, ChevronDown, Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
@@ -61,12 +61,12 @@ const Sidebar = ({ isOpen, onToggle, onApiKeyChange }: SidebarProps) => {
           {isOpen && (
             <div className="p-2 mb-4">
               <div className="flex items-center gap-2 mb-2">
-                <Key className="h-4 w-4 text-black" />
-                <span className="text-sm text-black">API Key</span>
+                <Search className="h-4 w-4 text-black" />
+                <span className="text-sm text-black">Search API Key</span>
               </div>
               <Input
                 type="password"
-                placeholder="Enter your API key"
+                placeholder="Enter your search API key"
                 value={apiKey}
                 onChange={handleApiKeyChange}
                 className="bg-gray-50 border-gray-200 text-black"
