@@ -21,8 +21,8 @@ const Sidebar = ({ isOpen, onToggle, onApiKeyChange, onNewChat, onChatResponse }
       title: "Today's Releases",
       items: [
         {
-          title: "New Team Collections Available",
-          content: "Just dropped! Check out our latest team collections:\n\n1. Brooklyn Nets Heritage Collection\n- Premium materials\n- Authentic designs\n- Limited quantities\n\n2. Atlanta Hawks Signature Series\n- Custom embroidery\n- Exclusive colorways\n\n3. Tampa Bay Elite Collection\n- Premium performance wear\n- Limited edition designs\n\nWhich collection would you like to explore?"
+          title: "New Holiday Collections",
+          content: "Just dropped! Check out our latest holiday collections:\n\n1. WINGSPAN Hoodie\n- Premium design\n- Available within 72 hours\n- View at: www.brandboom.com/app/a/E309C507924\n\n2. PENNANTS Collection\n- New holiday release\n- View at: www.brandboom.com/app/a/28D699E1686\n\n3. Sneaker Tie Backs\n- Perfect gift option\n- View at: www.brandboom.com/app/a/9B78CADB770\n\nWhich collection would you like to explore?"
         }
       ]
     },
@@ -30,45 +30,29 @@ const Sidebar = ({ isOpen, onToggle, onApiKeyChange, onNewChat, onChatResponse }
       title: "This Week's Highlights",
       items: [
         {
-          title: "Brooklyn Nets Collection",
-          content: "Explore our premium Brooklyn Nets collection:\n\n1. Heritage Varsity Jacket\n- Black/White premium wool\n- Leather sleeves\n- $295.00\n\n2. Court Culture Hoodie\n- Premium cotton blend\n- Exclusive design\n- $165.00\n\nWould you like to see more items or get sizing information?"
+          title: "NFL Week 14 Selections",
+          content: "Check out our NFL Week 14 Best in Division selections:\n- Premium team gear\n- Limited quantities\n- View at: www.brandboom.com/app/a/81598162307\n\nAll NFL teams available at: www.brandboom.com/app/a/9F416FC9538"
         },
         {
-          title: "Atlanta Hawks Gear",
-          content: "Check out our Atlanta Hawks premium collection:\n\n1. Signature Series Jacket\n- Red/Gold colorway\n- Premium materials\n- $275.00\n\n2. Game Day Hoodie\n- Custom embroidery\n- Limited edition\n- $165.00\n\nInterested in seeing more items?"
+          title: "NBA Collection",
+          content: "Explore our NBA collection featuring exclusive team designs and premium materials. View the full collection at: www.brandboom.com/app/a/37C6DC6066D"
         },
         {
-          title: "Tampa Bay Collection",
-          content: "Discover our Tampa Bay collection:\n\n1. Elite Series Jacket\n- Premium design\n- Custom patches\n- $245.00\n\n2. Game Day Cap\n- New Era collaboration\n- Limited release\n- $75.00\n\nWould you like to see more items?"
+          title: "MLB Collection",
+          content: "Discover our MLB collection with authentic team gear and limited editions. Browse the collection at: www.brandboom.com/app/a/D2DD62A764D"
         },
         {
-          title: "Limited Edition Sneakers",
-          content: "Our current limited edition sneaker collection:\n\n1. Pro Standard x Air Jordan 12\n- Game Royal colorway\n- Premium materials\n- Limited quantities\n- $225.00\n\n2. Exclusive Court Series\n- Custom designs\n- Premium comfort\n- $195.00\n\nWhich style interests you?"
+          title: "College Collection",
+          content: "Check out our College collection, including the new Colorado items! View all collegiate wear at: www.brandboom.com/app/a/AC4A7D8952C"
         }
       ]
     },
     {
-      title: "Popular Collections",
+      title: "Classic Collections",
       items: [
         {
-          title: "Air Jordan 12 Game Royal",
-          content: "The Air Jordan 12 Game Royal x Pro Standard:\n\n- Limited edition collaboration\n- Premium materials\n- Custom Pro Standard details\n- Exclusive packaging\n- Price: $225.00\n\nWould you like to check availability in your size?"
-        },
-        {
-          title: "LA Dodgers Satin Jacket",
-          content: "LA Dodgers Sublimated Satin Jacket:\n\n- Premium satin finish\n- Custom embroidery\n- Exclusive design\n- Limited quantities\n- Price: $295.00\n\nWould you like to see available sizes?"
-        },
-        {
-          title: "Team Logo Hoodies",
-          content: "Premium Team Logo Hoodie Collection:\n\n- Premium cotton blend\n- Authentic team designs\n- Custom embroidery\n- Available for all partner teams\n- Starting at $165.00\n\nWhich team's hoodie would you like to explore?"
-        },
-        {
-          title: "Exclusive Team Caps",
-          content: "Pro Standard Exclusive Team Caps:\n\n- New Era collaboration\n- Premium materials\n- Limited edition designs\n- Custom embroidery\n- Price: $75.00\n\nWhich team's cap interests you?"
-        },
-        {
-          title: "Luxury Athletic Wear",
-          content: "Pro Standard Luxury Athletic Collection:\n\n1. Premium Track Suits\n- Custom designs\n- Premium materials\n- $225.00\n\n2. Elite Performance Wear\n- Moisture-wicking fabric\n- Exclusive designs\n- Starting at $145.00\n\nWhich piece would you like to explore?"
+          title: "MASH UP Classics",
+          content: "Explore our timeless MASH UP collection featuring premium materials and authentic team logos. View the collection at: www.brandboom.com/app/a/1EB1F5270F7"
         }
       ]
     }
