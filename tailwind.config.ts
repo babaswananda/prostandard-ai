@@ -24,12 +24,12 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        chatgpt: {
-          sidebar: "#171717",
-          main: "#212121",
-          secondary: "#444654",
-          hover: "#2A2B32",
-          border: "#4E4F60"
+        prostandard: {
+          sidebar: "#FFFFFF",
+          main: "#FFFFFF",
+          secondary: "#F5F5F5",
+          hover: "#E5E5E5",
+          border: "#D4D4D4"
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
