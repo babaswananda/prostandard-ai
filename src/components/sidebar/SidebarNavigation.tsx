@@ -1,4 +1,4 @@
-import { Globe, Gift, Shirt } from "lucide-react";
+import { Gift, Shirt, Globe } from "lucide-react";
 
 interface SidebarNavigationProps {
   onItemClick: (content: string) => void;
@@ -14,7 +14,7 @@ export const SidebarNavigation = ({ onItemClick }: SidebarNavigationProps) => {
     {
       title: "League Collections",
       icon: <Shirt className="h-4 w-4 text-black" />,
-      content: "Explore our exclusive league collections:\n\n1. NFL Collection (Week 14)\n- Best in Division selections\n- All teams available\n- View at: brandboom.com/app/a/9F416FC9538\n\n2. NBA Collection\n- Exclusive team designs\n- Premium materials\n- View at: brandboom.com/app/a/37C6DC6066D\n\n3. MLB Collection\n- Authentic team gear\n- Limited editions\n- View at: brandboom.com/app/a/D2DD62A764D\n\n4. College Collection\n- Including Colorado\n- Premium collegiate wear\n- View at: brandboom.com/app/a/AC4A7D8952C\n\nWhich league interests you?"
+      content: "Explore our exclusive league collections:\n\n1. NFL (Week 14)\n- Best in Division selections\n- All teams available\n- View at: brandboom.com/app/a/9F416FC9538\n\n2. NBA Collection\n- Exclusive team designs\n- Premium materials\n- View at: brandboom.com/app/a/37C6DC6066D\n\n3. MLB Collection\n- Authentic team gear\n- Limited editions\n- View at: brandboom.com/app/a/D2DD62A764D\n\n4. College Collection\n- Including Colorado\n- Premium collegiate wear\n- View at: brandboom.com/app/a/AC4A7D8952C\n\nWhich league interests you?"
     },
     {
       title: "Classic Collections",
