@@ -39,7 +39,7 @@ const ChatInput = ({ onSend, isLoading = false }: ChatInputProps) => {
         <button 
           onClick={handleSubmit}
           disabled={isLoading || !message.trim()}
-          className="absolute right-3 top-[50%] -translate-y-[50%] p-1.5 bg-[#BF953F] hover:bg-[#AA771C] rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 z-10"
+          className="absolute right-3 top-[50%] -translate-y-[50%] p-1.5 bg-[#BF953F] hover:bg-[#AA771C] rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 z-20"
         >
           {isLoading ? (
             <Loader2 className="h-4 w-4 text-white animate-spin" />
