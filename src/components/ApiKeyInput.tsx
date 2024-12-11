@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Info } from 'lucide-react';
 
 interface ApiKeyInputProps {
   onApiKeySet: (url: string) => void;
@@ -27,9 +29,19 @@ const ApiKeyInput = ({ onApiKeySet }: ApiKeyInputProps) => {
   return (
     <div className="w-full max-w-md mx-auto p-6 space-y-4 bg-black/40 backdrop-blur-sm rounded-lg">
       <h2 className="text-xl font-semibold text-white text-center">Enter Ollama Server URL</h2>
-      <p className="text-sm text-gray-300 text-center">
-        Make sure Ollama is running with the llama2 model (ollama run llama2:3.3)
-      </p>
+      
+      <Alert className="bg-blue-500/10 border-blue-500/20 text-white">
+        <Info className="h-4 w-4" />
+        <AlertDescription>
+          To use this app:
+          <ol className="list-decimal ml-4 mt-2 space-y-1">
+            <li>Install Ollama from <a href="https://ollama.ai" className="underline" target="_blank" rel="noopener noreferrer">ollama.ai</a></li>
+            <li>Run: <code className="bg-black/20 px-1 rounded">ollama run llama2:3.3</code></li>
+            <li>For remote deployment, set up an Ollama server with CORS enabled</li>
+          </ol>
+        </AlertDescription>
+      </Alert>
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           type="text"
