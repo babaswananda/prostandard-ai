@@ -7,8 +7,8 @@ interface ChatInputProps {
 }
 
 const PROMPT_SUGGESTIONS = [
-  "Tell me about the new WINGSPAN hoodie collection",
-  "What are the best NFL teams this season?",
+  "Which teams match the Jordan Royal 12s? (LA Dodgers, NY Knicks)",
+  "Tell me about teams matching Jordan Columbias (Memphis Grizzlies)",
   "Show me the holiday Sneaker Tie Back options",
   "What's new in the College collection?",
   "Tell me about the MASH UP classics"
