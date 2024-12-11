@@ -5,31 +5,67 @@ import ChatHeader from '@/components/ChatHeader';
 import ChatInput from '@/components/ChatInput';
 import ActionButtons from '@/components/ActionButtons';
 import MessageList from '@/components/MessageList';
-import { useChat } from 'ai/react';
 import { Message } from '@/types/message';
 import { v4 as uuidv4 } from 'uuid';
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true
+});
 
 const Index = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { messages: aiMessages, setMessages: setAiMessages, isLoading } = useChat({
-    api: '/api/chat',
-    onError: (error) => {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+
+  const handleSendMessage = async (content: string) => {
+    if (!content.trim()) {
+      toast({
+        title: "Message Required",
+        description: "Please enter a message to continue",
+        className: "bg-black/80 text-white border-none",
+      });
+      return;
+    }
+
+    const userMessage: Message = {
+      id: uuidv4(),
+      role: 'user',
+      content
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setIsLoading(true);
+
+    try {
+      const completion = await openai.chat.completions.create({
+        messages: [...messages, userMessage].map(msg => ({
+          role: msg.role,
+          content: msg.content
+        })),
+        model: "gpt-4",
+      });
+
+      const assistantMessage: Message = {
+        id: uuidv4(),
+        role: 'assistant',
+        content: completion.choices[0]?.message?.content || 'Sorry, I could not generate a response.'
+      };
+
+      setMessages(prev => [...prev, assistantMessage]);
+    } catch (error) {
       toast({
         title: "Error",
-        description: error.message || "Something went wrong",
+        description: "Failed to get response. Please try again.",
         variant: "destructive",
         className: "bg-black/80 text-white border-none",
       });
+    } finally {
+      setIsLoading(false);
     }
-  });
-  const { toast } = useToast();
-
-  // Convert AI messages to our Message type
-  const messages: Message[] = aiMessages.map(msg => ({
-    id: uuidv4(),
-    role: msg.role === 'user' || msg.role === 'assistant' ? msg.role : 'assistant',
-    content: msg.content
-  }));
+  };
 
   const handleActionMessage = (title: string) => {
     let assistantMessage = "";
@@ -51,49 +87,18 @@ const Index = () => {
         break;
     }
 
-    setAiMessages(prev => [
+    setMessages(prev => [
       ...prev,
-      { 
+      {
         id: uuidv4(),
-        role: 'assistant' as const, 
-        content: assistantMessage 
-      }
-    ]);
-  };
-
-  const handleSendMessage = async (content: string) => {
-    if (!content.trim()) {
-      toast({
-        title: "Message Required",
-        description: "Please enter a message to continue",
-        className: "bg-black/80 text-white border-none",
-      });
-      return;
-    }
-
-    setAiMessages(prev => [
-      ...prev,
-      { 
-        id: uuidv4(),
-        role: 'user' as const, 
-        content 
-      }
-    ]);
-  };
-
-  const handleChatResponse = (content: string) => {
-    setAiMessages(prev => [
-      ...prev,
-      { 
-        id: uuidv4(),
-        role: 'assistant' as const, 
-        content 
+        role: 'assistant',
+        content: assistantMessage
       }
     ]);
   };
 
   const handleNewChat = () => {
-    setAiMessages([]);
+    setMessages([]);
     toast({
       title: "Chat Cleared",
       description: "Started a new conversation",
@@ -109,7 +114,7 @@ const Index = () => {
           onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
           onApiKeyChange={() => {}} 
           onNewChat={handleNewChat}
-          onChatResponse={handleChatResponse}
+          onChatResponse={() => {}}
         />
       </div>
       
