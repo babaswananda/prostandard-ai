@@ -52,7 +52,11 @@ Key collections to reference:
       }),
     })
 
-    // Return the streaming response directly
+    if (!mistralResponse.ok) {
+      const error = await mistralResponse.json();
+      throw new Error(error.message || 'Error from Mistral API');
+    }
+
     return new Response(mistralResponse.body, {
       headers: { 
         ...corsHeaders,
