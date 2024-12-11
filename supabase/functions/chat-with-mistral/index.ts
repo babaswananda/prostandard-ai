@@ -52,18 +52,8 @@ Key collections to reference:
       }),
     })
 
-    // Create a TransformStream to modify the response
-    const transformStream = new TransformStream({
-      transform(chunk, controller) {
-        controller.enqueue(chunk)
-      },
-    })
-
-    // Pipe the response through our transform stream
-    const stream = mistralResponse.body.pipeThrough(transformStream)
-
-    // Return the streaming response
-    return new Response(stream, {
+    // Return the streaming response directly
+    return new Response(mistralResponse.body, {
       headers: { 
         ...corsHeaders,
         'Content-Type': 'text/event-stream',

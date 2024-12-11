@@ -15,18 +15,6 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const streamResponse = (text: string, callback: (content: string) => void) => {
-    let currentIndex = 0;
-    const streamInterval = setInterval(() => {
-      if (currentIndex < text.length) {
-        callback(text.slice(0, currentIndex + 1));
-        currentIndex++;
-      } else {
-        clearInterval(streamInterval);
-      }
-    }, 20);
-  };
-
   const handleSendMessage = async (content: string) => {
     if (!content.trim()) {
       toast({
@@ -145,13 +133,19 @@ const Index = () => {
 
     setMessages(prev => [...prev, message]);
 
-    streamResponse(assistantMessage, (streamedContent) => {
-      setMessages(prev => prev.map(msg => 
-        msg.id === message.id 
-          ? { ...msg, content: streamedContent }
-          : msg
-      ));
-    });
+    let currentIndex = 0;
+    const streamInterval = setInterval(() => {
+      if (currentIndex < assistantMessage.length) {
+        setMessages(prev => prev.map(msg =>
+          msg.id === message.id
+            ? { ...msg, content: assistantMessage.slice(0, currentIndex + 1) }
+            : msg
+        ));
+        currentIndex++;
+      } else {
+        clearInterval(streamInterval);
+      }
+    }, 20);
   };
 
   return (
