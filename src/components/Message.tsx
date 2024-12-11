@@ -7,6 +7,29 @@ type MessageProps = {
 };
 
 const Message = ({ role, content }: MessageProps) => {
+  // Function to detect image URLs in the content
+  const renderContent = (text: string) => {
+    const imageUrlRegex = /(https?:\/\/[^\s]+\.(?:jpg|jpeg|png|gif))(?=\s|$)/gi;
+    const parts = text.split(imageUrlRegex);
+    const matches = text.match(imageUrlRegex) || [];
+    
+    return parts.map((part, index) => (
+      <>
+        {part}
+        {matches[index] && (
+          <div className="mt-2 mb-2">
+            <img 
+              src={matches[index]} 
+              alt="Product" 
+              className="rounded-lg max-w-[300px] h-auto"
+              loading="lazy"
+            />
+          </div>
+        )}
+      </>
+    ));
+  };
+
   return (
     <div className="py-6">
       <div className={`flex gap-4 ${role === 'user' ? 'flex-row-reverse' : ''}`}>
@@ -20,7 +43,7 @@ const Message = ({ role, content }: MessageProps) => {
               }
             `}
           >
-            {content}
+            {renderContent(content)}
           </div>
           {role === 'assistant' && <MessageActions />}
         </div>
