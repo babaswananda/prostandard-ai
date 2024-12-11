@@ -5,6 +5,7 @@ import ChatHeader from '@/components/ChatHeader';
 import ChatInput from '@/components/ChatInput';
 import ActionButtons from '@/components/ActionButtons';
 import MessageList from '@/components/MessageList';
+import { useChat } from 'ai/react';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -13,8 +14,17 @@ type Message = {
 
 const Index = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { messages, setMessages, isLoading } = useChat({
+    api: '/api/chat',
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message || "Something went wrong",
+        variant: "destructive",
+        className: "bg-black/80 text-white border-none",
+      });
+    }
+  });
   const { toast } = useToast();
 
   const handleActionMessage = (title: string) => {
@@ -39,7 +49,7 @@ const Index = () => {
 
     setMessages(prev => [
       ...prev,
-      { role: 'assistant', content: assistantMessage }
+      { role: 'assistant', content: assistantMessage } as const
     ]);
   };
 
@@ -53,69 +63,16 @@ const Index = () => {
       return;
     }
 
-    setIsLoading(true);
-
-    try {
-      const newMessages = [
-        ...messages,
-        { role: 'user', content } as const
-      ];
-      
-      setMessages(newMessages);
-
-      // Generate response based on user input
-      const assistantMessage: Message = {
-        role: 'assistant',
-        content: generateResponse(content)
-      };
-
-      setMessages([...newMessages, assistantMessage]);
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message || "Something went wrong",
-        variant: "destructive",
-        className: "bg-black/80 text-white border-none",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const generateResponse = (content: string) => {
-    const lowerContent = content.toLowerCase();
-    
-    // Team-specific responses
-    if (lowerContent.includes('brooklyn') || lowerContent.includes('nets')) {
-      return "Pro Standard's Brooklyn collection is one of our most popular lines. Current bestsellers:\n\n1. Brooklyn Nets Heritage Jacket\n- Black/White colorway\n- Premium leather patches\n- Sizes S-3XL\n- $225.00\n\n2. Nets Court Collection Hoodie\n- Premium cotton blend\n- Embroidered logos\n- $145.00\n\nWould you like to see more items or get sizing information?";
-    }
-    
-    if (lowerContent.includes('atlanta') || lowerContent.includes('hawks')) {
-      return "Our Atlanta Hawks collection features premium streetwear with authentic team designs:\n\n1. Hawks Signature Varsity Jacket\n- Red/Gold premium wool blend\n- Leather sleeves\n- $275.00\n\n2. ATL Court Culture Hoodie\n- Limited edition design\n- Premium cotton blend\n- $165.00\n\nWould you like to see more from the Atlanta collection?";
-    }
-    
-    if (lowerContent.includes('tampa') || lowerContent.includes('buccaneers')) {
-      return "Tampa Bay collection highlights:\n\n1. Buccaneers Premium Varsity Jacket\n- Pewter/Red colorway\n- Custom embroidery\n- $245.00\n\n2. Tampa Bay Limited Edition Cap\n- New Era collaboration\n- Exclusive design\n- $75.00\n\nWould you like details on sizing or other items?";
-    }
-
-    // Size and fit responses
-    if (lowerContent.includes('size') || lowerContent.includes('fit')) {
-      return "Pro Standard sizing guide:\n\nOur luxury athletic wear typically runs true to size with a slightly relaxed fit. For the best fit:\n\n- Jerseys: Order your normal size for a relaxed fit, size down for a closer fit\n- Hoodies: True to size with room for layering\n- Jackets: Size up if you plan to wear heavy layers underneath\n\nWould you like specific measurements for any item?";
-    }
-
-    // Color matching responses
-    if (lowerContent.includes('color') || lowerContent.includes('match')) {
-      return "Pro Standard color matching guide:\n\n1. For Brooklyn Nets gear:\n- Air Jordan 1 High 'Shadow'\n- Nike Dunk Low 'Black/White'\n\n2. For Hawks gear:\n- Air Jordan 1 'Bred'\n- Nike Dunk High 'Varsity Red'\n\nWould you like more color combination suggestions?";
-    }
-
-    // Default welcome message
-    return "Welcome to Pro Standard! I'm your luxury athletic wear specialist. I can help you with:\n\n- Team collections\n- Size and fit guidance\n- Color matching\n- Limited editions\n\nWhat would you like to explore?";
+    setMessages(prev => [
+      ...prev,
+      { role: 'user', content } as const
+    ]);
   };
 
   const handleChatResponse = (content: string) => {
     setMessages(prev => [
       ...prev,
-      { role: 'assistant', content }
+      { role: 'assistant', content } as const
     ]);
   };
 
