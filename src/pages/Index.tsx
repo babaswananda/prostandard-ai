@@ -112,12 +112,22 @@ const Index = () => {
     return "Welcome to Pro Standard! I'm your luxury athletic wear specialist. I can help you with:\n\n- Team collections\n- Size and fit guidance\n- Color matching\n- Limited editions\n\nWhat would you like to explore?";
   };
 
+  const handleNewChat = () => {
+    setMessages([]);
+    toast({
+      title: "Chat Cleared",
+      description: "Started a new conversation",
+      className: "bg-black/80 text-white border-none",
+    });
+  };
+
   return (
     <div className="flex h-screen">
       <Sidebar 
         isOpen={isSidebarOpen} 
         onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
         onApiKeyChange={() => {}} 
+        onNewChat={handleNewChat}
       />
       
       <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-0'}`}>
