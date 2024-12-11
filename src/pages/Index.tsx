@@ -55,7 +55,7 @@ const Index = () => {
     } else if (contentLower.includes('columbia') || contentLower.includes('grizzlies')) {
       response = "The Jordan Columbias are a perfect match for the Memphis Grizzlies gear! Check out this stunning piece from our collection: https://teamprostandard.com/cdn/shop/files/BMG6515705-UWH_1.png?crop=center&height=1000&v=1700085164&width=1000. The clean, crisp colorway aligns perfectly with the Grizzlies' aesthetic. Would you like to see our complete Memphis Grizzlies collection?";
     } else if (contentLower.includes('royal 12') || contentLower.includes('dodgers') || contentLower.includes('knicks')) {
-      response = "The Jordan Royal 12s are versatile! They pair perfectly with both LA Dodgers and NY Knicks gear. The royal blue colorway matches both teams' signature colors beautifully. Would you like to see our premium collections for either team?";
+      response = "The Jordan Royal 12s are versatile! Check out this perfect match from our collection: https://teamprostandard.com/cdn/shop/products/LLD632060-DBL_1.png?crop=center&height=800&v=1680267497&width=800. They pair perfectly with both LA Dodgers and NY Knicks gear. The royal blue colorway matches both teams' signature colors beautifully. Would you like to see our premium collections for either team?";
     } else if (contentLower.includes('nfl') && contentLower.includes('team')) {
       response = "You're just in time for Week 14's finest selections! I'm excited to share our Best in Division pieces at www.brandboom.com/app/a/81598162307. Each piece is a testament to luxury sports fashion. For our complete NFL collection, visit www.brandboom.com/app/a/9F416FC9538. Which division's style interests you most?";
     } else if (contentLower.includes('college')) {
