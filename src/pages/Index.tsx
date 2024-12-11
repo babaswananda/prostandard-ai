@@ -6,15 +6,12 @@ import ChatInput from '@/components/ChatInput';
 import ActionButtons from '@/components/ActionButtons';
 import MessageList from '@/components/MessageList';
 import { useChat } from 'ai/react';
-
-type Message = {
-  role: 'user' | 'assistant';
-  content: string;
-};
+import { Message } from '@/types/message';
+import { v4 as uuidv4 } from 'uuid';
 
 const Index = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { messages, setMessages, isLoading } = useChat({
+  const { messages: aiMessages, setMessages: setAiMessages, isLoading } = useChat({
     api: '/api/chat',
     onError: (error) => {
       toast({
@@ -26,6 +23,13 @@ const Index = () => {
     }
   });
   const { toast } = useToast();
+
+  // Convert AI messages to our Message type
+  const messages: Message[] = aiMessages.map(msg => ({
+    id: uuidv4(),
+    role: msg.role === 'user' || msg.role === 'assistant' ? msg.role : 'assistant',
+    content: msg.content
+  }));
 
   const handleActionMessage = (title: string) => {
     let assistantMessage = "";
@@ -47,9 +51,13 @@ const Index = () => {
         break;
     }
 
-    setMessages(prev => [
+    setAiMessages(prev => [
       ...prev,
-      { role: 'assistant', content: assistantMessage } as const
+      { 
+        id: uuidv4(),
+        role: 'assistant' as const, 
+        content: assistantMessage 
+      }
     ]);
   };
 
@@ -63,21 +71,29 @@ const Index = () => {
       return;
     }
 
-    setMessages(prev => [
+    setAiMessages(prev => [
       ...prev,
-      { role: 'user', content } as const
+      { 
+        id: uuidv4(),
+        role: 'user' as const, 
+        content 
+      }
     ]);
   };
 
   const handleChatResponse = (content: string) => {
-    setMessages(prev => [
+    setAiMessages(prev => [
       ...prev,
-      { role: 'assistant', content } as const
+      { 
+        id: uuidv4(),
+        role: 'assistant' as const, 
+        content 
+      }
     ]);
   };
 
   const handleNewChat = () => {
-    setMessages([]);
+    setAiMessages([]);
     toast({
       title: "Chat Cleared",
       description: "Started a new conversation",
