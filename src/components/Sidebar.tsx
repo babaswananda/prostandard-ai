@@ -12,24 +12,24 @@ interface SidebarProps {
 const Sidebar = ({ isOpen, onToggle, onApiKeyChange }: SidebarProps) => {
   const [apiKey, setApiKey] = useState("");
   const timeframes = [
-    { title: "Yesterday", items: ["Using Tailwind CSS Guide"] },
+    { title: "Today's Releases", items: ["New Team Collections Available"] },
     { 
-      title: "Previous 7 Days", 
+      title: "This Week's Highlights", 
       items: [
-        "Likeable and Inception Levels",
-        "Viral Figma Board Ideas",
-        "RAG Status in Software Dev",
-        "Image Input ChatGPT API"
+        "Brooklyn Nets Collection",
+        "Atlanta Hawks Gear",
+        "Tampa Bay Collection",
+        "Limited Edition Sneakers"
       ] 
     },
     {
-      title: "Previous 30 Days",
+      title: "Popular Collections",
       items: [
-        "Focus on Lovable Viral",
-        "Create Twitter Clone",
-        "Reddit Posting Guidelines",
-        "Revamping Social Features",
-        "US AI Voting Logo"
+        "Air Jordan 12 Game Royal",
+        "LA Dodgers Satin Jacket",
+        "Team Logo Hoodies",
+        "Exclusive Team Caps",
+        "Luxury Athletic Wear"
       ]
     }
   ];
