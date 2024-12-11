@@ -27,8 +27,23 @@ const ChatHeader = ({ isSidebarOpen = true }: ChatHeaderProps) => {
   };
 
   const handleModelSelect = (model: string) => {
-    console.log(`Selected model: ${model}`);
-    // Here you would typically update the model in your application state
+    let message = "";
+    switch (model) {
+      case "personal-stylist":
+        message = "Welcome to your Personal Stylist! I specialize in creating perfect outfit combinations with our luxury athletic wear. How can I help style you today?";
+        break;
+      case "size-expert":
+        message = "I'm your Size Expert! Let me help you find the perfect fit across our collections. What piece are you interested in?";
+        break;
+      case "trend-advisor":
+        message = "As your Trend Advisor, I'll keep you updated on our latest releases and upcoming collections. What trends are you interested in?";
+        break;
+      case "team-specialist":
+        message = "I'm your Team Specialist! I can help you explore our exclusive team collections and limited editions. Which team are you passionate about?";
+        break;
+    }
+    console.log(message);
+    // Here you would typically update the model and message in your application state
   };
 
   return (
