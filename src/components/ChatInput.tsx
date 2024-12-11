@@ -7,11 +7,11 @@ interface ChatInputProps {
 }
 
 const PROMPT_SUGGESTIONS = [
-  "What are the best-selling teams in Brooklyn?",
-  "Show me Tampa Florida's popular collections",
-  "What teams are hot in Atlanta?",
-  "Help me find the perfect size for team jerseys",
-  "What sneakers match with Dodgers gear?"
+  "Tell me about the new WINGSPAN hoodie collection",
+  "What are the best NFL teams this season?",
+  "Show me the holiday Sneaker Tie Back options",
+  "What's new in the College collection?",
+  "Tell me about the MASH UP classics"
 ];
 
 const ChatInput = ({ onSend, isLoading = false }: ChatInputProps) => {
