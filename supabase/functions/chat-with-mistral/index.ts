@@ -6,12 +6,17 @@ const MISTRAL_API_KEY = Deno.env.get('MISTRAL_API_KEY')
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Max-Age': '86400',
 }
 
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders })
+    return new Response(null, { 
+      status: 204, 
+      headers: corsHeaders 
+    })
   }
 
   try {
@@ -53,11 +58,14 @@ Key collections to reference:
     })
 
     if (!mistralResponse.ok) {
-      const error = await mistralResponse.json();
-      throw new Error(error.message || 'Error from Mistral API');
+      const error = await mistralResponse.json()
+      console.error('Mistral API error:', error)
+      throw new Error(error.message || 'Error from Mistral API')
     }
 
+    // Return the streaming response with proper headers
     return new Response(mistralResponse.body, {
+      status: 200,
       headers: { 
         ...corsHeaders,
         'Content-Type': 'text/event-stream',
