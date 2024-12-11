@@ -116,8 +116,8 @@ const Sidebar = ({ isOpen, onToggle, onApiKeyChange }: SidebarProps) => {
                     </svg>
                   </span>
                   <div className="flex flex-col">
-                    <span className="text-black">Upgrade plan</span>
-                    <span className="line-clamp-1 text-xs text-gray-500">More access to the best models</span>
+                    <span className="text-black">Settings & Account</span>
+                    <span className="line-clamp-1 text-xs text-gray-500">Preferences and sign out</span>
                   </div>
                 </div>
               </span>
