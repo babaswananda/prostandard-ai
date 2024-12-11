@@ -1,26 +1,46 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Sidebar from '@/components/Sidebar';
 import ChatHeader from '@/components/ChatHeader';
 import ChatInput from '@/components/ChatInput';
 import ActionButtons from '@/components/ActionButtons';
 import MessageList from '@/components/MessageList';
+import ApiKeyInput from '@/components/ApiKeyInput';
 import { Message } from '@/types/message';
 import { v4 as uuidv4 } from 'uuid';
 import OpenAI from 'openai';
-
-const openai = new OpenAI({
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true
-});
 
 const Index = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [openai, setOpenai] = useState<OpenAI | null>(null);
   const { toast } = useToast();
 
+  useEffect(() => {
+    const storedApiKey = localStorage.getItem('openai_api_key');
+    if (storedApiKey) {
+      initializeOpenAI(storedApiKey);
+    }
+  }, []);
+
+  const initializeOpenAI = (apiKey: string) => {
+    setOpenai(new OpenAI({
+      apiKey,
+      dangerouslyAllowBrowser: true
+    }));
+  };
+
   const handleSendMessage = async (content: string) => {
+    if (!openai) {
+      toast({
+        title: "API Key Required",
+        description: "Please set your OpenAI API key first",
+        className: "bg-black/80 text-white border-none",
+      });
+      return;
+    }
+
     if (!content.trim()) {
       toast({
         title: "Message Required",
@@ -105,6 +125,14 @@ const Index = () => {
       className: "bg-black/80 text-white border-none",
     });
   };
+
+  if (!openai) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-gray-900">
+        <ApiKeyInput onApiKeySet={initializeOpenAI} />
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen">
