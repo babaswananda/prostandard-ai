@@ -1,7 +1,11 @@
 import { Shirt, Search, ShoppingBag, Palette, Medal } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-const ActionButtons = () => {
+interface ActionButtonsProps {
+  onAction: (title: string) => void;
+}
+
+const ActionButtons = ({ onAction }: ActionButtonsProps) => {
   const { toast } = useToast();
 
   const actions = [
@@ -12,7 +16,9 @@ const ActionButtons = () => {
         toast({
           title: "Team Gear",
           description: "Browsing latest team collections...",
+          className: "bg-black/80 text-white border-none",
         });
+        onAction("Team Gear");
       }
     },
     { 
@@ -22,7 +28,9 @@ const ActionButtons = () => {
         toast({
           title: "Size Finder",
           description: "Opening size guide...",
+          className: "bg-black/80 text-white border-none",
         });
+        onAction("Size Finder");
       }
     },
     { 
@@ -32,7 +40,9 @@ const ActionButtons = () => {
         toast({
           title: "New Releases",
           description: "Loading latest drops...",
+          className: "bg-black/80 text-white border-none",
         });
+        onAction("New Releases");
       }
     },
     { 
@@ -42,7 +52,9 @@ const ActionButtons = () => {
         toast({
           title: "Color Match",
           description: "Opening color matching tool...",
+          className: "bg-black/80 text-white border-none",
         });
+        onAction("Color Match");
       }
     },
     { 
@@ -52,7 +64,9 @@ const ActionButtons = () => {
         toast({
           title: "Limited Editions",
           description: "Showing exclusive items...",
+          className: "bg-black/80 text-white border-none",
         });
+        onAction("Limited Editions");
       }
     },
   ];
