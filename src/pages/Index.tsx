@@ -35,26 +35,22 @@ const Index = () => {
 
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    let response = "Welcome to Pro Standard! I'd be happy to help you with our luxury athletic collection. ";
+    let response = "Welcome to Pro Standard! I'm delighted to introduce you to our luxury athletic collection. What particular piece catches your interest today?";
     
     const contentLower = content.toLowerCase();
     
     if (contentLower.includes('wingspan')) {
-      response = "The new WINGSPAN hoodie collection is a premium Philadelphia design, available as a limited holiday release within 72 hours. You can view the collection at brandboom.com/app/a/E309C507924. Would you like to see the available styles and sizes?";
+      response = "Ah, you've got excellent taste! Our new WINGSPAN hoodie is truly a masterpiece of Philadelphia-inspired luxury streetwear. It's a limited holiday release, crafted with premium materials and attention to detail that Pro Standard is known for. Available within 72 hours, you can explore the collection at www.brandboom.com/app/a/E309C507924. Would you like me to walk you through the unique features and styling options?";
     } else if (contentLower.includes('sneaker') || contentLower.includes('tie back')) {
-      response = "Our Sneaker Tie Backs are perfect gift options that pair well with December shoe releases. You can view the full collection at brandboom.com/app/a/9B78CADB770. Would you like to know more about specific styles?";
-    } else if (contentLower.includes('pennant')) {
-      response = "Check out our new PENNANTS Holiday Collection at brandboom.com/app/a/28D699E1686. Each piece features premium design and materials. Would you like to see specific items?";
-    } else if (contentLower.includes('nfl')) {
-      response = "For Week 14 of the NFL season, explore our Best in Division selections at brandboom.com/app/a/81598162307, or view all NFL teams at brandboom.com/app/a/9F416FC9538. Which team interests you?";
-    } else if (contentLower.includes('nba')) {
-      response = "Discover our NBA collection featuring exclusive team designs and premium materials at brandboom.com/app/a/37C6DC6066D. Would you like to see specific team gear?";
-    } else if (contentLower.includes('mlb')) {
-      response = "Browse our MLB collection with authentic team gear and limited editions at brandboom.com/app/a/D2DD62A764D. Which team's collection would you like to explore?";
+      response = "Perfect timing! Our Sneaker Tie Backs are the ultimate accessory for the discerning collector. They're designed to complement this December's most anticipated shoe releases. View our curated selection at www.brandboom.com/app/a/9B78CADB770. May I suggest some exclusive styling combinations that are particularly popular this season?";
+    } else if (contentLower.includes('nfl') && contentLower.includes('team')) {
+      response = "You're just in time for Week 14's finest selections! I'm excited to share our Best in Division pieces at www.brandboom.com/app/a/81598162307. Each piece is a testament to luxury sports fashion. For our complete NFL collection, visit www.brandboom.com/app/a/9F416FC9538. Which division's style interests you most?";
     } else if (contentLower.includes('college')) {
-      response = "Our College collection, including the new Colorado items, is available at brandboom.com/app/a/AC4A7D8952C. Would you like to see specific university gear?";
+      response = "Ah, you'll love our latest College collection! We've just added some exceptional Colorado pieces that are causing quite a stir. The entire collegiate collection showcases our commitment to premium athletic wear. Browse the full range at www.brandboom.com/app/a/AC4A7D8952C. Shall I highlight some of our bestselling university designs?";
     } else if (contentLower.includes('mash up') || contentLower.includes('classic')) {
-      response = "Explore our classic MASH UP collection featuring timeless designs and authentic team logos at brandboom.com/app/a/1EB1F5270F7. Would you like to see our classic pieces?";
+      response = "The MASH UP classics are truly special - they're the cornerstone of our luxury athletic heritage. Each piece in this collection at www.brandboom.com/app/a/1EB1F5270F7 combines timeless design with premium materials and authentic team logos. Would you like to see how our most distinguished clients are styling these pieces?";
+    } else if (contentLower.includes('pennant')) {
+      response = "Our new PENNANTS Holiday Collection is causing quite a sensation! Each piece is a celebration of athletic luxury, available at www.brandboom.com/app/a/28D699E1686. The attention to detail and premium materials make these perfect for the discerning collector. Would you like to see our most sought-after designs?";
     }
 
     const assistantMessage: Message = {
